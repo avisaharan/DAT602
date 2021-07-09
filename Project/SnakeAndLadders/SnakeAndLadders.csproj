@@ -52,6 +52,12 @@
     <Compile Include="AdminTools.Designer.cs">
       <DependentUpon>AdminTools.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateNewGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateNewGame.Designer.cs">
+      <DependentUpon>CreateNewGame.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectGame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AdminTools.resx">
       <DependentUpon>AdminTools.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateNewGame.resx">
+      <DependentUpon>CreateNewGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectGame.resx">
       <DependentUpon>SelectGame.cs</DependentUpon>
