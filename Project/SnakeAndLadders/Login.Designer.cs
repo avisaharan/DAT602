@@ -32,11 +32,13 @@ namespace SnakeAndLadders
             this.labelGameTitle = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.usernameText = new System.Windows.Forms.TextBox();
+            this.passwordText = new System.Windows.Forms.TextBox();
             this.loginButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelGameTitle
@@ -69,19 +71,19 @@ namespace SnakeAndLadders
             this.label2.TabIndex = 3;
             this.label2.Text = "Password";
             // 
-            // textBox1
+            // usernameText
             // 
-            this.textBox1.Location = new System.Drawing.Point(207, 150);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(148, 20);
-            this.textBox1.TabIndex = 4;
+            this.usernameText.Location = new System.Drawing.Point(207, 150);
+            this.usernameText.Name = "usernameText";
+            this.usernameText.Size = new System.Drawing.Size(148, 20);
+            this.usernameText.TabIndex = 4;
             // 
-            // textBox2
+            // passwordText
             // 
-            this.textBox2.Location = new System.Drawing.Point(207, 210);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(148, 20);
-            this.textBox2.TabIndex = 5;
+            this.passwordText.Location = new System.Drawing.Point(207, 210);
+            this.passwordText.Name = "passwordText";
+            this.passwordText.Size = new System.Drawing.Size(148, 20);
+            this.passwordText.TabIndex = 5;
             // 
             // loginButton
             // 
@@ -92,7 +94,7 @@ namespace SnakeAndLadders
             this.loginButton.TabIndex = 6;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
+            this.loginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
             // label3
             // 
@@ -112,16 +114,40 @@ namespace SnakeAndLadders
             this.label4.TabIndex = 8;
             this.label4.Text = "if you don\'t have an account";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Crimson;
+            this.label6.Location = new System.Drawing.Point(37, 150);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(19, 20);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "1";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Crimson;
+            this.label5.Location = new System.Drawing.Point(37, 210);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(19, 20);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "2";
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(416, 359);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.loginButton);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.passwordText);
+            this.Controls.Add(this.usernameText);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelGameTitle);
@@ -137,11 +163,13 @@ namespace SnakeAndLadders
         private System.Windows.Forms.Label labelGameTitle;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox usernameText;
+        private System.Windows.Forms.TextBox passwordText;
         private System.Windows.Forms.Button loginButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }
 
