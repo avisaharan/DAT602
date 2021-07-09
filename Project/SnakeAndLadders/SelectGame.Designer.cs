@@ -30,9 +30,9 @@ namespace SnakeAndLadders
         private void InitializeComponent()
         {
             this.label2 = new System.Windows.Forms.Label();
-            this.CurrentlyActiveGamesList = new System.Windows.Forms.ListBox();
+            this.gameList = new System.Windows.Forms.ListBox();
             this.newGameButton = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.joinGameButton = new System.Windows.Forms.Button();
             this.PlayersInTheSelectedGame = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -47,20 +47,20 @@ namespace SnakeAndLadders
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(302, 73);
+            this.label2.Location = new System.Drawing.Point(339, 73);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(174, 22);
+            this.label2.Size = new System.Drawing.Size(92, 22);
             this.label2.TabIndex = 1;
-            this.label2.Text = "List of Active Games";
+            this.label2.Text = "All Games";
             // 
-            // CurrentlyActiveGamesList
+            // gameList
             // 
-            this.CurrentlyActiveGamesList.FormattingEnabled = true;
-            this.CurrentlyActiveGamesList.Location = new System.Drawing.Point(306, 98);
-            this.CurrentlyActiveGamesList.Name = "CurrentlyActiveGamesList";
-            this.CurrentlyActiveGamesList.Size = new System.Drawing.Size(161, 212);
-            this.CurrentlyActiveGamesList.TabIndex = 2;
-            this.CurrentlyActiveGamesList.SelectedIndexChanged += new System.EventHandler(this.CurrentlyActiveGamesList_SelectedIndexChanged);
+            this.gameList.FormattingEnabled = true;
+            this.gameList.Location = new System.Drawing.Point(306, 98);
+            this.gameList.Name = "gameList";
+            this.gameList.Size = new System.Drawing.Size(161, 212);
+            this.gameList.TabIndex = 2;
+            this.gameList.SelectedIndexChanged += new System.EventHandler(this.CurrentlyActiveGamesList_SelectedIndexChanged);
             // 
             // newGameButton
             // 
@@ -72,14 +72,15 @@ namespace SnakeAndLadders
             this.newGameButton.UseVisualStyleBackColor = true;
             this.newGameButton.Click += new System.EventHandler(this.newGameButton_Click);
             // 
-            // button2
+            // joinGameButton
             // 
-            this.button2.Location = new System.Drawing.Point(323, 331);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(132, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Join This Game";
-            this.button2.UseVisualStyleBackColor = true;
+            this.joinGameButton.Location = new System.Drawing.Point(323, 331);
+            this.joinGameButton.Name = "joinGameButton";
+            this.joinGameButton.Size = new System.Drawing.Size(132, 23);
+            this.joinGameButton.TabIndex = 4;
+            this.joinGameButton.Text = "Join This Game";
+            this.joinGameButton.UseVisualStyleBackColor = true;
+            this.joinGameButton.Click += new System.EventHandler(this.joinGameButton_Click);
             // 
             // PlayersInTheSelectedGame
             // 
@@ -177,9 +178,9 @@ namespace SnakeAndLadders
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.PlayersInTheSelectedGame);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.joinGameButton);
             this.Controls.Add(this.newGameButton);
-            this.Controls.Add(this.CurrentlyActiveGamesList);
+            this.Controls.Add(this.gameList);
             this.Controls.Add(this.label2);
             this.Name = "SelectGame";
             this.Text = "Select Game";
@@ -192,9 +193,9 @@ namespace SnakeAndLadders
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox CurrentlyActiveGamesList;
+        private System.Windows.Forms.ListBox gameList;
         private System.Windows.Forms.Button newGameButton;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button joinGameButton;
         private System.Windows.Forms.ListBox PlayersInTheSelectedGame;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

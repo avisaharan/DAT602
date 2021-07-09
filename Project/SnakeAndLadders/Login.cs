@@ -25,6 +25,7 @@ namespace SnakeAndLadders
             {
                 SelectGame selectGame = new SelectGame();
                 selectGame.Show();
+                DataAccess.Username = usernameText.Text;
                 this.Hide();
             }
             else if(message.Contains("Doesn't exist"))
@@ -45,24 +46,20 @@ namespace SnakeAndLadders
                         {
                             SelectGame selectGame = new SelectGame();
                             selectGame.Show();
+                            DataAccess.Username = usernameText.Text;
                             this.Hide();
                         }
                     }
                     else
                     {
-                        result = MessageBox.Show(message, "Error", MessageBoxButtons.OK);
-                        if (result == DialogResult.OK)
-                        {
-                            this.Close();
-                        }
+                        MessageBox.Show(message,"Error");
                     }
                 }
 
             }
             else
             {
-                var result = MessageBox.Show(message, "Unsuccessful", MessageBoxButtons.OK);
-                if (result == DialogResult.OK){}
+                MessageBox.Show(message);
             }
         }
     }

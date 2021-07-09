@@ -21,9 +21,10 @@ namespace SnakeAndLadders
         {
             DataAccess aDataAccess = new DataAccess();
             var activegames = aDataAccess.GetActiveGames();
-            var allPlayers = aDataAccess.GetAllPlayers();
             activeGamesList.DataSource = activegames;
-            allPlayersList.DataSource = allPlayers;
+            allPlayersList.DataSource = aDataAccess.GetAllPlayers();
+            var allGames = aDataAccess.GetAllGames();
+            allGamesList.DataSource = allGames;
         }
 
         private void activeGamesList_SelectedIndexChanged(object sender, EventArgs e)
@@ -36,6 +37,46 @@ namespace SnakeAndLadders
             UpdatePlayerDetails updateplayer = new UpdatePlayerDetails();
             updateplayer.Show();
             this.Hide();
+        }
+
+        private void deletePlayerButton_Click(object sender, EventArgs e)
+        {
+            var selectedPlayer = Convert.ToString(allPlayersList.SelectedItem);
+            DataAccess aDataAccess = new DataAccess();
+            var message=aDataAccess.DeletePlayer(selectedPlayer);
+            if (message.Contains("Deleted")){
+                MessageBox.Show(message);
+                allPlayersList.DataSource = aDataAccess.GetAllPlayers();
+            }
+            else
+            {
+                MessageBox.Show($"Not Deleted {selectedPlayer}");
+            }
+        }
+
+
+        private void DeleteGameButton_Click(object sender, EventArgs e)
+        {
+            DataAccess aDataAccess = new DataAccess();
+            var message = aDataAccess.DeleteGame(Convert.ToString(allGamesList.SelectedItem));
+            if (message.Contains("Deleted"))
+            {
+                MessageBox.Show(message);
+            }
+            else
+            {
+                MessageBox.Show("Not Deleted");
+            }
+            var allGames = aDataAccess.GetAllGames();
+            allGamesList.DataSource = allGames;
+
+        }
+
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            SelectGame selectGame = new SelectGame();
+            selectGame.Show();
+            this.Close();
         }
     }
 }

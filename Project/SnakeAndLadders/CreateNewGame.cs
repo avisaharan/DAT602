@@ -16,5 +16,29 @@ namespace SnakeAndLadders
         {
             InitializeComponent();
         }
+
+        private void createGameButton_Click(object sender, EventArgs e)
+        { 
+            DataAccess aDataAccess = new DataAccess();
+            var gameCreated = aDataAccess.CreateNewGame(gameNameBox.Text);
+            if (gameCreated.Length > 2){
+                MessageBox.Show(gameCreated);
+                SelectGame newSelect = new SelectGame();
+                newSelect.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Game creating failed.");
+            }
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            SelectGame newSelect = new SelectGame();
+            newSelect.Show();
+            this.Close();
+        }
     }
 }

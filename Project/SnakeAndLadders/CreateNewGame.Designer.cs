@@ -30,9 +30,10 @@ namespace SnakeAndLadders
         private void InitializeComponent()
         {
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.gameNameBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.createGameButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label2
@@ -45,12 +46,12 @@ namespace SnakeAndLadders
             this.label2.TabIndex = 2;
             this.label2.Text = "New Game";
             // 
-            // textBox1
+            // gameNameBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(415, 129);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 3;
+            this.gameNameBox.Location = new System.Drawing.Point(415, 129);
+            this.gameNameBox.Name = "gameNameBox";
+            this.gameNameBox.Size = new System.Drawing.Size(100, 20);
+            this.gameNameBox.TabIndex = 3;
             // 
             // label1
             // 
@@ -61,23 +62,35 @@ namespace SnakeAndLadders
             this.label1.TabIndex = 4;
             this.label1.Text = "Game Name";
             // 
-            // button1
+            // createGameButton
             // 
-            this.button1.Location = new System.Drawing.Point(361, 185);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Create";
-            this.button1.UseVisualStyleBackColor = true;
+            this.createGameButton.Location = new System.Drawing.Point(361, 185);
+            this.createGameButton.Name = "createGameButton";
+            this.createGameButton.Size = new System.Drawing.Size(75, 23);
+            this.createGameButton.TabIndex = 5;
+            this.createGameButton.Text = "Create";
+            this.createGameButton.UseVisualStyleBackColor = true;
+            this.createGameButton.Click += new System.EventHandler(this.createGameButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Location = new System.Drawing.Point(361, 214);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 6;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // CreateNewGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.createGameButton);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.gameNameBox);
             this.Controls.Add(this.label2);
             this.Name = "CreateNewGame";
             this.Text = "CreateNewGame";
@@ -89,8 +102,9 @@ namespace SnakeAndLadders
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox gameNameBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button createGameButton;
+        private System.Windows.Forms.Button cancelButton;
     }
 }

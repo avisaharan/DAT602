@@ -21,23 +21,29 @@ namespace SnakeAndLadders
 
         private void CurrentlyActiveGamesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            DataAccess aDataAccess = new DataAccess();
+            var playersInGame = aDataAccess.GetPlayersInGame(Convert.ToString(gameList.SelectedItem));
+            PlayersInTheSelectedGame.DataSource = playersInGame;
         }
 
         private void SelectGame_Load(object sender, EventArgs e)
         {
             DataAccess aDataAccess = new DataAccess();
-            var activegames=aDataAccess.GetActiveGames();
+
+            var allGames=aDataAccess.GetAllGames();
+            gameList.DataSource = allGames;
+
             var onlinePlayers = aDataAccess.GetOnlinePlayers();
-            CurrentlyActiveGamesList.DataSource = activegames;
             PlayersInTheSelectedGame.DataSource = onlinePlayers;
+            var playersInGame = aDataAccess.GetPlayersInGame(Convert.ToString(gameList.SelectedItem));
+            PlayersInTheSelectedGame.DataSource = playersInGame;
         }
 
         private void newGameButton_Click(object sender, EventArgs e)
         {
             CreateNewGame newGame = new CreateNewGame();
             newGame.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void adminToolsButton_Click(object sender, EventArgs e)
@@ -45,6 +51,22 @@ namespace SnakeAndLadders
             AdminTools admintools = new AdminTools();
             admintools.Show();
             this.Hide();
+        }
+
+        private void joinGameButton_Click(object sender, EventArgs e)
+        {
+            
+            DataAccess aDataAccess = new DataAccess();
+            var message = aDataAccess.JoinGame(Convert.ToString(gameList.SelectedItem));
+            if(message.Contains("has joined")){
+                MessageBox.Show(message);
+                var playersInGame = aDataAccess.GetPlayersInGame(Convert.ToString(gameList.SelectedItem));
+                PlayersInTheSelectedGame.DataSource = playersInGame;
+            }
+            else
+            {
+                MessageBox.Show("Failed to join the game");
+            }
         }
     }
 }
