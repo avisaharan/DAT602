@@ -39,5 +39,12 @@ namespace SnakeAndLadders
             newGame.Show();
             this.Hide();
         }
+
+        private void adminToolsButton_Click(object sender, EventArgs e)
+        {
+            AdminTools admintools = new AdminTools();
+            admintools.Show();
+            this.Hide();
+        }
     }
 }

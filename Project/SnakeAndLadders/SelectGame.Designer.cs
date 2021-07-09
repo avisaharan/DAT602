@@ -39,7 +39,7 @@ namespace SnakeAndLadders
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.adminToolsButton = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -143,14 +143,15 @@ namespace SnakeAndLadders
             this.label7.TabIndex = 12;
             this.label7.Text = "Players in the Game";
             // 
-            // button4
+            // adminToolsButton
             // 
-            this.button4.Location = new System.Drawing.Point(546, 358);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(102, 23);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Admin Panel";
-            this.button4.UseVisualStyleBackColor = true;
+            this.adminToolsButton.Location = new System.Drawing.Point(546, 358);
+            this.adminToolsButton.Name = "adminToolsButton";
+            this.adminToolsButton.Size = new System.Drawing.Size(102, 23);
+            this.adminToolsButton.TabIndex = 13;
+            this.adminToolsButton.Text = "Admin Panel";
+            this.adminToolsButton.UseVisualStyleBackColor = true;
+            this.adminToolsButton.Click += new System.EventHandler(this.adminToolsButton_Click);
             // 
             // label8
             // 
@@ -169,7 +170,7 @@ namespace SnakeAndLadders
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.adminToolsButton);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -200,7 +201,7 @@ namespace SnakeAndLadders
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button adminToolsButton;
         private System.Windows.Forms.Label label8;
     }
 }

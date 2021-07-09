@@ -80,6 +80,14 @@ namespace SnakeAndLadders
             return list;
         }
 
+        public List<string> GetAllPlayers()
+        {
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "get_all_players()");
+            var activeGames = (aDataSet.Tables[0]);
+            var list = (from x in activeGames.AsEnumerable()
+                        select x.Field<string>(0)).ToList();
+            return list;
+        }
 
 
 
