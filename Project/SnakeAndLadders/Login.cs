@@ -16,5 +16,13 @@ namespace SnakeAndLadders
         {
             InitializeComponent();
         }
+
+        private void loginButton_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("This username is taken. Try another one", "Username Taken", MessageBoxButtons.OK);
+            if (result==DialogResult.OK)
+            {
+            }
+        }
     }
 }
