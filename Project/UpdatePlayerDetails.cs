@@ -40,5 +40,12 @@ namespace SnakeAndLadders
                 MessageBox.Show("Not updated");
             }
         }
+
+        private void logoutButton_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Close();
+        }
     }
 }

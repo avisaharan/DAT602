@@ -41,6 +41,7 @@ namespace SnakeAndLadders
             this.label7 = new System.Windows.Forms.Label();
             this.adminToolsButton = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
+            this.logoutButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label2
@@ -165,11 +166,23 @@ namespace SnakeAndLadders
             this.label8.TabIndex = 14;
             this.label8.Text = "3";
             // 
+            // logoutButton
+            // 
+            this.logoutButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logoutButton.Location = new System.Drawing.Point(704, 12);
+            this.logoutButton.Name = "logoutButton";
+            this.logoutButton.Size = new System.Drawing.Size(84, 37);
+            this.logoutButton.TabIndex = 29;
+            this.logoutButton.Text = "Logout";
+            this.logoutButton.UseVisualStyleBackColor = true;
+            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
+            // 
             // SelectGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.logoutButton);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.adminToolsButton);
             this.Controls.Add(this.label7);
@@ -204,5 +217,6 @@ namespace SnakeAndLadders
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button adminToolsButton;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button logoutButton;
     }
 }

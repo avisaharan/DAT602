@@ -48,9 +48,24 @@ namespace SnakeAndLadders
 
         private void adminToolsButton_Click(object sender, EventArgs e)
         {
-            AdminTools admintools = new AdminTools();
-            admintools.Show();
-            this.Hide();
+            DataAccess aDataAccess = new DataAccess();
+            var message = aDataAccess.AdminCheck();
+            if (message.Contains("granted"))
+            {
+                MessageBox.Show(message);
+                AdminTools admintools = new AdminTools();
+                admintools.Show();
+                this.Hide();
+            }
+            else if(message.Contains("Only admins"))
+            {
+                MessageBox.Show(message);
+            }
+            else
+            {
+                MessageBox.Show("Some error occured.");
+            }
+
         }
 
         private void joinGameButton_Click(object sender, EventArgs e)
@@ -67,6 +82,13 @@ namespace SnakeAndLadders
             {
                 MessageBox.Show("Failed to join the game");
             }
+        }
+
+        private void logoutButton_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Close();
         }
     }
 }

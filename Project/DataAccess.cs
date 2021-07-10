@@ -174,5 +174,14 @@ namespace SnakeAndLadders
             return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
         }
 
+        public string AdminCheck()
+        {
+            List<MySqlParameter> paramInput = new List<MySqlParameter>();
+            var paramUserName = new MySqlParameter("@username", MySqlDbType.VarChar, 20);
+            paramUserName.Value = Username;
+            paramInput.Add(paramUserName);
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "admin_access(@username)", paramInput.ToArray());
+            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
+        }
     }
 }

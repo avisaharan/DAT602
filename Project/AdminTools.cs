@@ -79,5 +79,12 @@ namespace SnakeAndLadders
             selectGame.Show();
             this.Close();
         }
+
+        private void logoutButton_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Close();
+        }
     }
 }
