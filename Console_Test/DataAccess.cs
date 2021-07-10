@@ -14,8 +14,22 @@ namespace SnakeAndLadders
 
         public static MySqlConnection mySqlConnection= new MySqlConnection("server=localhost;user id=root;password=A4Appqs!;persistsecurityinfo=True;database=snakeandladder");
         public static string Username="";
-        public static string GameName = "";
         //variable to store test results
+
+        public static bool login; 
+        public static bool create_new_game;
+        public static bool admin_edit_player;
+        public static bool get_active_games;
+        public static bool get_online_players;
+        public static bool join_game;
+        public static bool leave_game;
+        
+        public static bool register;
+        public static bool logout;
+        public static bool move_player;
+        public static bool recent_chat;
+        public static bool send_message;
+
 
 
         public string Login(string pUsername, string pPassword)
@@ -57,16 +71,6 @@ namespace SnakeAndLadders
             return list;
         }
 
-        public string CreateNewGame(string pGameName)
-        {
-            List<MySqlParameter> paramInput = new List<MySqlParameter>();
-            var paramgameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
-            paramgameName.Value = pGameName;
-            paramInput.Add(paramgameName);
-            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "create_new_game(@gameName)", paramInput.ToArray());
-            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
-        }
-
         public List<string> GetOnlinePlayers()
         {
             var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "get_online_players()");
@@ -85,6 +89,26 @@ namespace SnakeAndLadders
             return list;
         }
 
+        public string DeletePlayer(string pPlayer)
+        {
+            List<MySqlParameter> paramInput = new List<MySqlParameter>();
+            var paramUsername = new MySqlParameter("@username", MySqlDbType.VarChar, 20);
+            paramUsername.Value = pPlayer;
+            paramInput.Add(paramUsername);
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "admin_delete_player(@username)", paramInput.ToArray());
+            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
+        }
+
+        public string DeleteGame(string pGameName)
+        {
+            List<MySqlParameter> paramInput = new List<MySqlParameter>();
+            var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
+            paramGameName.Value = pGameName;
+            paramInput.Add(paramGameName);
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "admin_delete_game(@gameName)", paramInput.ToArray());
+            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
+        }
+
         public List<string> GetPlayersInGame(string pGameName)
         {
             List<MySqlParameter> paramInput = new List<MySqlParameter>();
@@ -96,6 +120,16 @@ namespace SnakeAndLadders
             var list = (from x in players.AsEnumerable()
                         select x.Field<string>(0)).ToList();
             return list;
+        }
+
+        public string CreateNewGame(string pGameName)
+        {
+            List<MySqlParameter> paramInput = new List<MySqlParameter>();
+            var paramgameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
+            paramgameName.Value = pGameName;
+            paramInput.Add(paramgameName);
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "create_new_game(@gameName)", paramInput.ToArray());
+            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
         }
 
         public string JoinGame(string pGameName)
@@ -118,22 +152,6 @@ namespace SnakeAndLadders
             var list = (from x in allGames.AsEnumerable()
                         select x.Field<string>(0)).ToList();
             return list;
-        }
-
-        public string MovePlayer(string pGameName, int pDiceValue)
-        {
-            List<MySqlParameter> paramInput = new List<MySqlParameter>();
-            var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
-            var paramUserName = new MySqlParameter("@userName", MySqlDbType.VarChar, 20);
-            var paramDiceValue = new MySqlParameter("@diceValue", MySqlDbType.Int16);
-            paramGameName.Value = pGameName;
-            paramUserName.Value = Username;
-            paramDiceValue.Value = pDiceValue;
-            paramInput.Add(paramGameName);
-            paramInput.Add(paramUserName);
-            paramInput.Add(paramDiceValue);
-            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "move_player(@userName, @gameName,@diceValue)", paramInput.ToArray());
-            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
         }
 
         public string AdminEditPlayer(string pUsername, string pPassword, int pLoginAttempts, bool pIsAdmin)
@@ -165,70 +183,5 @@ namespace SnakeAndLadders
             var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "admin_access(@username)", paramInput.ToArray());
             return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
         }
-
-        public string DeletePlayer(string pPlayer)
-        {
-            List<MySqlParameter> paramInput = new List<MySqlParameter>();
-            var paramUsername = new MySqlParameter("@username", MySqlDbType.VarChar, 20);
-            paramUsername.Value = pPlayer;
-            paramInput.Add(paramUsername);
-            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "admin_delete_player(@username)", paramInput.ToArray());
-            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
-        }
-
-        public string DeleteGame(string pGameName)
-        {
-            List<MySqlParameter> paramInput = new List<MySqlParameter>();
-            var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
-            paramGameName.Value = pGameName;
-            paramInput.Add(paramGameName);
-            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "admin_delete_game(@gameName)", paramInput.ToArray());
-            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
-        }
-
-        public string SendChatMessage(String message)
-        {
-            List<MySqlParameter> paramInput = new List<MySqlParameter>();
-            var paramMessage = new MySqlParameter("@message", MySqlDbType.VarChar, 20);
-            var paramUsername = new MySqlParameter("@userName", MySqlDbType.VarChar, 20);
-            var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
-            paramMessage.Value = message;
-            paramUsername.Value = Username;
-            paramGameName.Value = GameName;
-            paramInput.Add(paramUsername);
-            paramInput.Add(paramGameName);
-            paramInput.Add(paramMessage);
-            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "send_message(@message,@username,@gameName)", paramInput.ToArray());
-            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
-        }
-
-        public string RetrieveChat(string pGameName)
-        {
-            if (GameName.Length > 1)
-            {
-                pGameName = GameName;
-                return "You can only retirve the chat of game that you have joined.";
-            }
-            else
-            {
-                List<MySqlParameter> paramInput = new List<MySqlParameter>();
-                var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
-                paramGameName.Value = GameName;
-                paramInput.Add(paramGameName);
-                var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "recent_chat(@gameName)", paramInput.ToArray());
-                return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
-            }
-        }
-
-        public string Logout()
-        {
-            List<MySqlParameter> paramInput = new List<MySqlParameter>();
-            var paramUsername = new MySqlParameter("@userName", MySqlDbType.VarChar, 20);
-            paramUsername.Value = Username;
-            paramInput.Add(paramUsername);
-            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "logout(@userName)", paramInput.ToArray());
-            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
-        }
-
     }
 }

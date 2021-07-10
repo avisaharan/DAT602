@@ -70,7 +70,7 @@ namespace SnakeAndLadders
 
         private void joinGameButton_Click(object sender, EventArgs e)
         {
-            
+            DataAccess.GameName = Convert.ToString(gameList.SelectedItem);
             DataAccess aDataAccess = new DataAccess();
             var message = aDataAccess.JoinGame(Convert.ToString(gameList.SelectedItem));
             if(message.Contains("has joined")){
@@ -86,9 +86,19 @@ namespace SnakeAndLadders
 
         private void logoutButton_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
-            login.Show();
-            this.Close();
+            DataAccess aDataAccess = new DataAccess();
+            var message = aDataAccess.Logout();
+            if (message.Contains("Logged out"))
+            {
+                MessageBox.Show(message);
+                Login login = new Login();
+                login.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Error while logging out");
+            }
         }
     }
 }

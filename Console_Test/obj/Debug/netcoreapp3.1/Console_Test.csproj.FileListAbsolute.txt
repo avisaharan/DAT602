@@ -1,0 +1,4 @@
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Console_Test\obj\Debug\netcoreapp3.1\Console_Test.csproj.AssemblyReference.cache
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Console_Test\obj\Debug\netcoreapp3.1\Console_Test.AssemblyInfoInputs.cache
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Console_Test\obj\Debug\netcoreapp3.1\Console_Test.AssemblyInfo.cs
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Console_Test\obj\Debug\netcoreapp3.1\Console_Test.csproj.CoreCompileInputs.cache
