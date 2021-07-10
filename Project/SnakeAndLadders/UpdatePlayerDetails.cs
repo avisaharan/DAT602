@@ -12,10 +12,33 @@ namespace SnakeAndLadders
 {
     public partial class UpdatePlayerDetails : Form
     {
-        public UpdatePlayerDetails()
+        private string username;
+        public UpdatePlayerDetails(string pusername)
         {
             InitializeComponent();
+            username = pusername;
+            userNameTextBox.Text = username;
         }
 
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            AdminTools admintools = new AdminTools();
+            admintools.Show();
+            this.Hide();
+        }
+
+        private void saveNewDetails_Click(object sender, EventArgs e)
+        {
+            DataAccess aDataAccess = new DataAccess();
+            var message = aDataAccess.AdminEditPlayer(username, passwordTextBox.Text, Convert.ToInt32(loginAttempts.Text), isAdminCheckbox.Checked);
+            if (message.Contains("Updated"))
+            {
+                MessageBox.Show(message);
+            }
+            else
+            {
+                MessageBox.Show("Not updated");
+            }
+        }
     }
 }

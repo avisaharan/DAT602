@@ -34,7 +34,8 @@ namespace SnakeAndLadders
 
         private void updatePlayerButton_Click(object sender, EventArgs e)
         {
-            UpdatePlayerDetails updateplayer = new UpdatePlayerDetails();
+
+            UpdatePlayerDetails updateplayer = new UpdatePlayerDetails(Convert.ToString(allPlayersList.SelectedItem));
             updateplayer.Show();
             this.Hide();
         }

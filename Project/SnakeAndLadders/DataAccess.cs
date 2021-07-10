@@ -154,6 +154,25 @@ namespace SnakeAndLadders
             return list;
         }
 
+        public string AdminEditPlayer(string pUsername, string pPassword, int pLoginAttempts, bool pIsAdmin)
+        {
+            List<MySqlParameter> paramInput = new List<MySqlParameter>();
+            var paramUsername = new MySqlParameter("@username", MySqlDbType.VarChar, 20);
+            var paramPassword = new MySqlParameter("@password", MySqlDbType.VarChar, 20);
+            var paramLoginAttempts = new MySqlParameter("@loginAttempts", MySqlDbType.Int16);
+            var paramIsAdmin = new MySqlParameter("@isAdmin", MySqlDbType.Bit);
+            paramUsername.Value = pUsername;
+            paramPassword.Value = pPassword;
+            paramLoginAttempts.Value = pLoginAttempts;
+            paramIsAdmin.Value = pIsAdmin;
+            paramInput.Add(paramUsername);
+            paramInput.Add(paramPassword); 
+            paramInput.Add(paramLoginAttempts);
+            paramInput.Add(paramIsAdmin);
+
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "admin_edit_player(@userName,@password,@loginAttempts,@isAdmin)", paramInput.ToArray());
+            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
+        }
 
     }
 }
