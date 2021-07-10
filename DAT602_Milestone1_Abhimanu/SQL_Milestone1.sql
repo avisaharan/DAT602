@@ -1,58 +1,56 @@
-drop database if exists DAT601_AbhimanuSaharan;
-create database DAT601_AbhimanuSaharan;
-use DAT601_AbhimanuSaharan;
+DROP DATABASE IF EXISTS SnakeandLadder;
+CREATE DATABASE SnakeAndLadder;
+USE SnakeAndLadder;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DDL`()
+BEGIN
+    
+CREATE TABLE `gamesession` (
+  `gameID` int NOT NULL AUTO_INCREMENT,
+  `gameName` varchar(20) DEFAULT NULL,
+  `gameActive` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`gameID`),
+  UNIQUE KEY `gameID_UNIQUE` (`gameID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-drop procedure if exists ddl;
-delimiter //
-create procedure ddl()
-begin
+CREATE TABLE `player` (
+  `id` int AUTO_INCREMENT NOT NULL,
+  `username` varchar(20) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `highScore` int DEFAULT NULL,
+  `isAdmin` tinyint(1) DEFAULT NULL,
+  `isOnline` tinyint(1) DEFAULT NULL,
+  `loginAttempts` int DEFAULT '0',
+  `gameID` int DEFAULT NULL,
+  `location` int DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  FOREIGN KEY (`gameID`) REFERENCES gamesession (`gameID`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `Player` (
-  `userid` int NOT NULL,
-  `Password` varchar(30) NOT NULL,
-  `HighScore` int,
-  `IsOnline` boolean NOT NULL,
-  `Admin` boolean,
-  PRIMARY KEY (`userid`)
-);
+CREATE TABLE `tiles` (
+  `tileID` int NOT NULL,
+  `xPosition` int DEFAULT NULL,
+  `yPosition` int DEFAULT NULL,
+  `hasSnake` tinyint(1) DEFAULT '0',
+  `hasLadder` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`tileID`),
+  UNIQUE KEY `tileID_UNIQUE` (`tileID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `GameSession` (
-  `SessionID` int,
-  `Player1` int,
-  `Player2` int,
-  PRIMARY KEY (`SessionID`),
-  FOREIGN KEY (Player1) REFERENCES Player(userid),
-  FOREIGN KEY (Player2) REFERENCES Player(userid)
-);
-
-CREATE TABLE `Field` (
-  `FieldID` int,
-  `BoardID` int,
-  PRIMARY KEY (`FieldID`)
-);
-
-CREATE TABLE `GameBoard` (
-  `BoardID` int,
-  `SessionID` int,
-  `Player1Location` int,
-  `Player2Location` int,
-  PRIMARY KEY (`BoardID`),
-  FOREIGN KEY (SessionID) REFERENCES GameSession(SessionId),
-  FOREIGN KEY (Player1Location) REFERENCES Field(FieldID),
-  FOREIGN KEY (Player2Location) REFERENCES Field(FieldID)
-);
-
-alter table Field add foreign key (BoardID) references GameBoard(BoardID);
-
-CREATE TABLE `Objects` (
-  `SnakeORLadder` boolean,
-  `StartingField` int,
-  `EndingField` int,
-  FOREIGN KEY (StartingField) REFERENCES Field(FieldID),
-  FOREIGN KEY (EndingField) REFERENCES Field(FieldID)
-);
-END //
-delimiter ;
+CREATE TABLE `message` (
+  `messageID` int NOT NULL,
+  `gameID` int NOT NULL,
+  `playerID` int NOT NULL,
+  `message` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`messageID`),
+  UNIQUE KEY `messageID_UNIQUE` (`messageID`),
+  FOREIGN KEY (`playerID`) REFERENCES player (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`gameID`) REFERENCES gamesession (`gameId`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+END$$
+DELIMITER ;
 -- DDL Ends
 -- DML Starts
 
@@ -63,45 +61,41 @@ begin
 
 -- insert starts
 
-INSERT INTO Player(userId,Password, HighScore, IsOnline, Admin)
-VALUES(1,'jhsjhd',0, true, false),
-		(2,'jhsjhd',0, true, true),
-        (3,'jhsjhd',0, false, false);
+INSERT INTO player(userId,Password)
+VALUES(1,'jhsjhd');
 
-INSERT INTO GameSession(SessionID,Player1,Player2)
-VALUES(1,1,2),
-(2,3,null);
+INSERT INTO gamesession(gamename)
+VALUES('New Game');
 
-INSERT INTO Field(FieldID)
-VALUES(1);
+INSERT INTO tiles(xPosition, yPosition, hasSnake, hasLadder)
+VALUES(3,4,1,0);
 
-INSERT INTO GameBoard(BoardID,SessionID,Player1Location,Player2Location)
-VALUES(1,1,1,1);
-
-INSERT INTO Objects(SnakeorLadder)
-VALUES(false);
+INSERT INTO message(message,gameID,playerID)
+VALUES("Hello",1,1);
 
 -- insert ends
 -- update start
 
 UPDATE Player
-SET PASSWORD="JKHF" WHERE userId=1;
+SET PASSWORD="JKHF" WHERE Id=1;
 
 UPDATE GameSession
-SET Player1=null WHERE Player1=1;
+SET gameName="OldGame" WHERE GameID=1;
 
-UPDATE GameBoard
-SET Player1Location=null
-WHERE SessionID=1;
+UPDATE message
+SET message=""
+WHERE messageID=1;
 
-update objects
-set SnakeorLadder=true where SnakeOrLadder=false;
+update tiles
+set hasSnake=true where tileID=3;
 
 -- update ends
 -- delete start
 
-Delete from GameSession
-where player1=null or player2=null;
+Delete from GameSession;
+Delete from Player;
+Delete from Tiles;
+Delete from Message;
 
 -- delete ends
 -- select starts
@@ -109,6 +103,8 @@ where player1=null or player2=null;
 SELECT userid, highscore from Player AS ScoreBoard;
 Select * from GameSession;
 Select userid,password FROM Player AS OnlinePlayers where IsOnline=true;
+Select messages FROM messages Order BY messageID DESC LIMIT 10;
+
 
 -- select ends
 
