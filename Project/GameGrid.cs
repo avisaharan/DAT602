@@ -23,24 +23,7 @@ namespace SnakeAndLadders
         {
             DataAccess aDataAccess = new DataAccess();
             TilesGrid.DataSource = aDataAccess.Rough();
-            // Set your desired AutoSize Mode:
-            //TilesGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            //TilesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            //TilesGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            // Now that DataGridView has calculated it's Widths; we can now store each column Width values.
-            //for (int i = 0; i <= TilesGrid.Columns.Count - 1; i++)
-            //{
-            //    // Store Auto Sized Widths:
-            //    int colw = TilesGrid.Columns[i].Width;
-
-            //    // Remove AutoSizing:
-            //    TilesGrid.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            //    // Set Width to calculated AutoSize value:
-            //    TilesGrid.Columns[i].Width = colw;
-            //}
-
+            temporaryGrid.DataSource = aDataAccess.GetPlayersInAGame();
             myLocation.Text = Convert.ToString(DataAccess.PlayerLocation);
         }
 
@@ -82,7 +65,16 @@ namespace SnakeAndLadders
         private void rollDiceButton_Click(object sender, EventArgs e)
         {
             DataAccess aDataAccess = new DataAccess();
-            var message = aDataAccess.MovePlayer();
+            aDataAccess.MovePlayer();
+            int newLocation= DataAccess.PlayerLocation;
+            myLocation.Text = newLocation.ToString();
+            if (newLocation == 1)
+            {
+                SelectGame newGame = new SelectGame();
+                newGame.Show();
+                this.Close();
+            }
         }
+
     }
 }

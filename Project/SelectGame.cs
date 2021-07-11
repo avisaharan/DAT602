@@ -77,6 +77,9 @@ namespace SnakeAndLadders
                 MessageBox.Show(message);
                 var playersInGame = aDataAccess.GetPlayersInGame(Convert.ToString(gameList.SelectedItem));
                 PlayersInTheSelectedGame.DataSource = playersInGame;
+                GameGrid gamegrid = new GameGrid();
+                gamegrid.Show();
+                this.Hide();
             }
             else
             {

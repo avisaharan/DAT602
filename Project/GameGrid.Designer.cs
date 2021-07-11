@@ -41,7 +41,9 @@ namespace SnakeAndLadders
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.temporaryGrid = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.TilesGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.temporaryGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // TilesGrid
@@ -51,7 +53,10 @@ namespace SnakeAndLadders
             this.TilesGrid.AllowUserToOrderColumns = true;
             this.TilesGrid.AllowUserToResizeColumns = false;
             this.TilesGrid.AllowUserToResizeRows = false;
-            this.TilesGrid.BackgroundColor = System.Drawing.SystemColors.HighlightText;
+            this.TilesGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.TilesGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.TilesGrid.BackgroundColor = System.Drawing.SystemColors.MenuBar;
+            this.TilesGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TilesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TilesGrid.ColumnHeadersVisible = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -73,7 +78,7 @@ namespace SnakeAndLadders
             this.TilesGrid.ShowCellToolTips = false;
             this.TilesGrid.ShowEditingIcon = false;
             this.TilesGrid.ShowRowErrors = false;
-            this.TilesGrid.Size = new System.Drawing.Size(776, 369);
+            this.TilesGrid.Size = new System.Drawing.Size(544, 230);
             this.TilesGrid.StandardTab = true;
             this.TilesGrid.TabIndex = 0;
             // 
@@ -112,16 +117,17 @@ namespace SnakeAndLadders
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(403, 9);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(601, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 13);
+            this.label1.Size = new System.Drawing.Size(90, 13);
             this.label1.TabIndex = 31;
             this.label1.Text = "Your Location:";
             // 
             // myLocation
             // 
             this.myLocation.AutoSize = true;
-            this.myLocation.Location = new System.Drawing.Point(481, 9);
+            this.myLocation.Location = new System.Drawing.Point(693, 9);
             this.myLocation.Name = "myLocation";
             this.myLocation.Size = new System.Drawing.Size(13, 13);
             this.myLocation.TabIndex = 33;
@@ -143,7 +149,7 @@ namespace SnakeAndLadders
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Crimson;
-            this.label4.Location = new System.Drawing.Point(378, 5);
+            this.label4.Location = new System.Drawing.Point(576, 4);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(19, 20);
             this.label4.TabIndex = 35;
@@ -182,6 +188,21 @@ namespace SnakeAndLadders
             this.label7.TabIndex = 38;
             this.label7.Text = "5";
             // 
+            // temporaryGrid
+            // 
+            this.temporaryGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.temporaryGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.temporaryGrid.BackgroundColor = System.Drawing.SystemColors.MenuBar;
+            this.temporaryGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.temporaryGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.temporaryGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.temporaryGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.temporaryGrid.Location = new System.Drawing.Point(594, 32);
+            this.temporaryGrid.Name = "temporaryGrid";
+            this.temporaryGrid.RowHeadersVisible = false;
+            this.temporaryGrid.Size = new System.Drawing.Size(187, 369);
+            this.temporaryGrid.TabIndex = 39;
+            // 
             // GameGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,6 +211,7 @@ namespace SnakeAndLadders
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.temporaryGrid);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -202,9 +224,10 @@ namespace SnakeAndLadders
             this.Controls.Add(this.leaveGameButton);
             this.Controls.Add(this.TilesGrid);
             this.Name = "GameGrid";
-            this.Text = "GameGrid";
+            this.Text = " ";
             this.Load += new System.EventHandler(this.GameGrid_Load);
             ((System.ComponentModel.ISupportInitialize)(this.TilesGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.temporaryGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -223,5 +246,6 @@ namespace SnakeAndLadders
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridView temporaryGrid;
     }
 }

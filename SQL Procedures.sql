@@ -296,22 +296,22 @@ DELIMITER ;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `move_player`(pPlayerName varchar(20), pGameName varchar(20), pdiceValue int)
 BEGIN
-(SELECT ID FROM player WHERE username=pPlayerName) into @pPlayerID;
-(SELECT gameID FROM gamesession WHERE gameName=pGameName) into @pGameID;
-IF (SELECT `isOnline` FROM player WHERE `playerID`=@pplayerID)=1 THEN
-(SELECT `location` from player WHERE `playerID`=@playerID AND `gameID`=@pGameID) into @currentLocation;
-	IF (100-@currentLocation)>pDiceValue THEN 
+(SELECT ID FROM player WHERE username=pPlayerName) into @pId;
+(SELECT gameID FROM gamesession WHERE strcmp(gameName,pgameName)=0) into @pGameID;
+(SELECT location from player WHERE id=@pId AND gameID=@pGameID) into @currentlocation;
+    select @currentlocation as message;
+    IF (100-@currentLocation)>pDiceValue THEN 
 	UPDATE player
     SET `location`=@currentLocation+pdiceValue
-    WHERE `ID`=@pPlayerID AND `gameID`=@pGameID;
+    WHERE `ID`=@pId AND `gameID`=@pGameID;
     END If;
-    (SELECT `location` from player WHERE `playerID`=@playerID AND `gameID`=@pGameID) into @currentLocation;
+    (SELECT `location` from player WHERE `Id`=@pId AND `gameID`=@pGameID) into @currentLocation;
     call after_move(@currentLocation, @newlocation);
     UPDATE player
     SET `location`=@newLocation
-    WHERE `ID`=@pPlayerID AND `gameID`=@pGameID;
+    WHERE `ID`=@pId AND `gameID`=@pGameID;
     SELECT concat("Player moved ", pdiceValue," tiles, to TileID-", @newlocation,"-") as MESSAGE;
-END If;
+
 END$$
 DELIMITER ;
 
@@ -342,6 +342,28 @@ START TRANSACTION;
      END;
   END IF;
 COMMIT;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `rough`()
+BEGIN
+	DECLARE tileID  INT;
+	SET tileID = 1;
+    DROP TABLE if exists gameboard;
+    
+CREATE TABLE `gameboard` (
+  `col1` int,`col2` int,`col3` int,`col4` int,`col5` int,`col6` int,`col7` int,`col8` int,`col9` int,`col10` int,`gameID` int);
+	loop_label:  LOOP
+		IF  tileID > 100 THEN 
+			LEAVE  loop_label;
+            else 
+        insert into gameboard(col1,col2,col3,col4,col5,col6,col7,col8,col9,col10)
+        values(tileID,tileID+1,tileId+2,tileId+3,tileID+4,tileID+5,tileID+6,tileID+7,tileID+8,tileID+9);
+        SET  tileID = tileID + 10;
+		END  IF;
+	END LOOP;
+	SELECT col1,col2,col3,col4,col5,col6,col7,col8,col9,col10 from gameboard;
 END$$
 DELIMITER ;
 

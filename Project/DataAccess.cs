@@ -16,6 +16,7 @@ namespace SnakeAndLadders
         public static string Username = "";
         public static string GameName = "my game";
         public static int PlayerLocation = 1;
+        public static int PlayerScore = 1;
         public static DataSet TilesData = new DataSet();
         //variable to store test results
 
@@ -138,23 +139,34 @@ namespace SnakeAndLadders
             paramInput.Add(paramUserName);
             paramInput.Add(paramDiceValue);
             var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "move_player(@userName,@gameName,@diceValue)", paramInput.ToArray());
-            string returned = (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
-            int pfrom = returned.IndexOf("tileid-") + "tileid-".Length;
-            int pto = returned.LastIndexOf("-");
-            MessageBox.Show(returned);
-            if(pto>0&&pfrom>0 && returned.Length>pfrom)
-            PlayerLocation = Convert.ToInt32(returned.Substring(pfrom, pto - pfrom));
-            return returned;
+            string message = (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
+            if (message.Contains("won"))
+            {
+                MessageBox.Show("You have won the game!");
+                PlayerLocation = 1;
+                PlayerScore++;
+            }
+            if (message.Contains("moved") || message.Contains("won"))
+            {
+                int pfrom = message.IndexOf("location: ") + "location: ".Length;
+                MessageBox.Show(message); 
+                PlayerLocation = Convert.ToInt32(message.Substring(pfrom));
+            }
+            else
+            {
+                MessageBox.Show("Could not move player.");
+            }
+            return message;
         }
 
-        public DataSet GetPlayersInAGame()
+        public DataTable GetPlayersInAGame()
         {
             List<MySqlParameter> paramInput = new List<MySqlParameter>();
             var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
             paramGameName.Value = GameName;
             paramInput.Add(paramGameName);
             var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "all_players_location(@gameName)", paramInput.ToArray());
-            return aDataSet;
+            return aDataSet.Tables[0];
             //return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
         }
 
