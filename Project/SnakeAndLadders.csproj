@@ -55,6 +55,7 @@
     </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -100,12 +101,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="snakeandladderDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>snakeandladderDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="TileCordinate.cs" />
     <Compile Include="UpdatePlayerDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,17 +145,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="snakeandladderDataSet.xsc">
-      <DependentUpon>snakeandladderDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="snakeandladderDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>snakeandladderDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="snakeandladderDataSet.xss">
-      <DependentUpon>snakeandladderDataSet.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,4 +1,3 @@
-
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DDL`()
 BEGIN
@@ -137,6 +136,14 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `all_players_location`(pgameName varchar(20))
+BEGIN
+(SELECT gameID FROM gamesession WHERE gameName=pGameName) into @pGameID;
+	Select (location) AS 'Other Players Location' from player where gameID=@pgameID;
+END$$
+DELIMITER ;
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_new_game`(pGameName varchar(20))
 BEGIN
 IF exists(SELECT gameName FROM gamesession WHERE gameName=pGameName) THEN
@@ -217,11 +224,13 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `leave_game`(pPlayerID int,pGameID int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `leave_game`(pPlayerName varchar(20), pGameName varchar(20))
 BEGIN
+(SELECT ID FROM player WHERE username=pPlayerName) into @pPlayerID;
+(SELECT gameID FROM gamesession WHERE gameName=pGameName) into @pGameID;
 	UPDATE player
 SET `isOnline` = false
-WHERE `ID` = pPlayerID AND `gameID`=pGameID;
+WHERE `ID` = @pPlayerID AND `gameID`=@pGameID;
 
 SELECT concat((SELECT `username` FROM player WHERE ID=pPlayerID), ' has left', (SELECT `gameName` FROM gamesession WHERE gameID=pgameID)) AS MESSAGE;
 END$$
@@ -301,7 +310,7 @@ IF (SELECT `isOnline` FROM player WHERE `playerID`=@pplayerID)=1 THEN
     UPDATE player
     SET `location`=@newLocation
     WHERE `ID`=@pPlayerID AND `gameID`=@pGameID;
-    SELECT concat("Player moved ", pdiceValue," tiles, to TileID", @newlocation) as MESSAGE;
+    SELECT concat("Player moved ", pdiceValue," tiles, to TileID-", @newlocation,"-") as MESSAGE;
 END If;
 END$$
 DELIMITER ;

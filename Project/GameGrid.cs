@@ -13,34 +13,19 @@ namespace SnakeAndLadders
     
     public partial class GameGrid : Form
     {
-        public List<TileCordinate> tilesCordinates{get;set;}
 
         public GameGrid()
         {
             InitializeComponent();
-            tilesCordinates = CordinatesStore();
         }
 
         private void GameGrid_Load(object sender, EventArgs e)
         {
             DataAccess aDataAccess = new DataAccess();
-            var cordinates = this.tilesCordinates;
             TilesGrid.DataSource = aDataAccess.GetPlayersInAGame().Tables[0];
+
+
             myLocation.Text = Convert.ToString(DataAccess.PlayerLocation);
-        }
-
-        private List<TileCordinate> CordinatesStore()
-        {
-            var cordinates = new List<TileCordinate>();
-            cordinates.Add(new TileCordinate()
-            {
-                Id=1,
-                X = 1,
-                Y=1
-            });
-
-            return cordinates;
-
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
