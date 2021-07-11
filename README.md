@@ -8,7 +8,7 @@ Here are the:
 
 [SQL procedures](https://github.com/avisaharan/DAT602/blob/main/SQL%20Procedures.sql)
 
-[Console App to test all SQL procedures.](https://github.com/avisaharan/DAT602/tree/main/Console%20Tests)
+[Console App to test all SQL procedures.](https://github.com/avisaharan/DAT602/tree/main/Console_Tests)
 
 [Report of Complete Project](https://github.com/avisaharan/DAT602/blob/main/Complete%20Report.pdf)
 
