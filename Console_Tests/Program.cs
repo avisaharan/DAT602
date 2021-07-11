@@ -1,5 +1,4 @@
 ﻿using System;
-using SnakeAndLadders;
 
 namespace Console_Tests
 {
@@ -89,7 +88,7 @@ namespace Console_Tests
                     Pause();
                     return true;
                 case "11":
-                    Console.WriteLine("Result = \n\n" + dataAccess.AdminEditPlayer("ABhi", "A4APp",0,1) );
+                    Console.WriteLine("Result = \n\n" + dataAccess.AdminEditPlayer("ABhi", "A4APp",0,true) );
                     Pause();
                     return true;
                 case "12":
