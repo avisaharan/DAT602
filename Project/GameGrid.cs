@@ -22,8 +22,24 @@ namespace SnakeAndLadders
         private void GameGrid_Load(object sender, EventArgs e)
         {
             DataAccess aDataAccess = new DataAccess();
-            TilesGrid.DataSource = aDataAccess.GetPlayersInAGame().Tables[0];
+            TilesGrid.DataSource = aDataAccess.Rough();
+            // Set your desired AutoSize Mode:
+            //TilesGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //TilesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //TilesGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
+            // Now that DataGridView has calculated it's Widths; we can now store each column Width values.
+            //for (int i = 0; i <= TilesGrid.Columns.Count - 1; i++)
+            //{
+            //    // Store Auto Sized Widths:
+            //    int colw = TilesGrid.Columns[i].Width;
+
+            //    // Remove AutoSizing:
+            //    TilesGrid.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+            //    // Set Width to calculated AutoSize value:
+            //    TilesGrid.Columns[i].Width = colw;
+            //}
 
             myLocation.Text = Convert.ToString(DataAccess.PlayerLocation);
         }

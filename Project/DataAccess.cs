@@ -131,17 +131,19 @@ namespace SnakeAndLadders
             var paramDiceValue = new MySqlParameter("@diceValue", MySqlDbType.Int16);
             Random rnd = new Random();
             int dice = rnd.Next(1, 7);
-            paramGameName.Value = GameName;
-            paramUserName.Value = Username;
+            paramGameName.Value = "my game";
+            paramUserName.Value = "abhi";
             paramDiceValue.Value = dice;
             paramInput.Add(paramGameName);
             paramInput.Add(paramUserName);
             paramInput.Add(paramDiceValue);
-            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "move_player(@userName, @gameName,@diceValue)", paramInput.ToArray());
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "move_player(@userName,@gameName,@diceValue)", paramInput.ToArray());
             string returned = (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
-            int pFrom = returned.IndexOf("TileID-") + "TileID-".Length;
-            int pTo = returned.LastIndexOf("-");
-            PlayerLocation = Convert.ToInt32(returned.Substring(pFrom, pTo - pFrom));
+            int pfrom = returned.IndexOf("tileid-") + "tileid-".Length;
+            int pto = returned.LastIndexOf("-");
+            MessageBox.Show(returned);
+            if(pto>0&&pfrom>0 && returned.Length>pfrom)
+            PlayerLocation = Convert.ToInt32(returned.Substring(pfrom, pto - pfrom));
             return returned;
         }
 
@@ -261,6 +263,16 @@ namespace SnakeAndLadders
             paramInput.Add(paramUsername);
             var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "logout(@userName)", paramInput.ToArray());
             return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
+        }
+
+        public DataTable Rough()
+        {
+            List<MySqlParameter> paramInput = new List<MySqlParameter>();
+            var paramUsername = new MySqlParameter("@userName", MySqlDbType.VarChar, 20);
+            paramUsername.Value = Username;
+            paramInput.Add(paramUsername);
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "rough()");
+            return (aDataSet.Tables[0]);
         }
 
     }

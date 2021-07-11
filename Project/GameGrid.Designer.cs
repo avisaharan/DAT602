@@ -29,6 +29,7 @@ namespace SnakeAndLadders
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TilesGrid = new System.Windows.Forms.DataGridView();
             this.leaveGameButton = new System.Windows.Forms.Button();
             this.logoutButton = new System.Windows.Forms.Button();
@@ -45,10 +46,35 @@ namespace SnakeAndLadders
             // 
             // TilesGrid
             // 
+            this.TilesGrid.AllowUserToAddRows = false;
+            this.TilesGrid.AllowUserToDeleteRows = false;
+            this.TilesGrid.AllowUserToOrderColumns = true;
+            this.TilesGrid.AllowUserToResizeColumns = false;
+            this.TilesGrid.AllowUserToResizeRows = false;
+            this.TilesGrid.BackgroundColor = System.Drawing.SystemColors.HighlightText;
             this.TilesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TilesGrid.ColumnHeadersVisible = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.TilesGrid.DefaultCellStyle = dataGridViewCellStyle1;
+            this.TilesGrid.Enabled = false;
             this.TilesGrid.Location = new System.Drawing.Point(12, 32);
+            this.TilesGrid.MultiSelect = false;
             this.TilesGrid.Name = "TilesGrid";
+            this.TilesGrid.ReadOnly = true;
+            this.TilesGrid.RowHeadersVisible = false;
+            this.TilesGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.TilesGrid.ShowCellErrors = false;
+            this.TilesGrid.ShowCellToolTips = false;
+            this.TilesGrid.ShowEditingIcon = false;
+            this.TilesGrid.ShowRowErrors = false;
             this.TilesGrid.Size = new System.Drawing.Size(776, 369);
+            this.TilesGrid.StandardTab = true;
             this.TilesGrid.TabIndex = 0;
             // 
             // leaveGameButton
@@ -160,6 +186,9 @@ namespace SnakeAndLadders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
