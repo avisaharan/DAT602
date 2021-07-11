@@ -80,6 +80,12 @@
       <DependentUpon>CreateNewGame.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccess.cs" />
+    <Compile Include="GameGrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameGrid.Designer.cs">
+      <DependentUpon>GameGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectGame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>snakeandladderDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="TileCordinate.cs" />
     <Compile Include="UpdatePlayerDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateNewGame.resx">
       <DependentUpon>CreateNewGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameGrid.resx">
+      <DependentUpon>GameGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectGame.resx">
       <DependentUpon>SelectGame.cs</DependentUpon>

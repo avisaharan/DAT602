@@ -12,9 +12,10 @@ namespace SnakeAndLadders
     public class DataAccess
     {
 
-        public static MySqlConnection mySqlConnection= new MySqlConnection("server=localhost;user id=root;password=A4Appqs!;persistsecurityinfo=True;database=snakeandladder");
-        public static string Username="";
-        public static string GameName = "";
+        public static MySqlConnection mySqlConnection = new MySqlConnection("server=localhost;user id=root;password=A4Appqs!;persistsecurityinfo=True;database=snakeandladder");
+        public static string Username = "";
+        public static string GameName = "my game";
+        public static int PlayerLocation = 1;
         //variable to store test results
 
 
@@ -120,19 +121,37 @@ namespace SnakeAndLadders
             return list;
         }
 
-        public string MovePlayer(string pGameName, int pDiceValue)
+        public string MovePlayer()
         {
+
             List<MySqlParameter> paramInput = new List<MySqlParameter>();
             var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
             var paramUserName = new MySqlParameter("@userName", MySqlDbType.VarChar, 20);
             var paramDiceValue = new MySqlParameter("@diceValue", MySqlDbType.Int16);
-            paramGameName.Value = pGameName;
+            Random rnd = new Random();
+            int dice = rnd.Next(1, 7);
+            paramGameName.Value = GameName;
             paramUserName.Value = Username;
-            paramDiceValue.Value = pDiceValue;
+            paramDiceValue.Value = dice;
             paramInput.Add(paramGameName);
             paramInput.Add(paramUserName);
             paramInput.Add(paramDiceValue);
             var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "move_player(@userName, @gameName,@diceValue)", paramInput.ToArray());
+            string returned = (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
+            int pFrom = returned.IndexOf("TileID-") + "TileID-".Length;
+            int pTo = returned.LastIndexOf("-");
+            PlayerLocation = Convert.ToInt32(returned.Substring(pFrom, pTo - pFrom));
+            return returned;
+        }
+
+        public string GetPlayersInAGame()
+        {
+            List<MySqlParameter> paramInput = new List<MySqlParameter>();
+            var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
+            paramGameName.Value = GameName;
+            paramInput.Add(paramGameName);
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "all_players_location(@gameName)", paramInput.ToArray());
+
             return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
         }
 
@@ -218,6 +237,19 @@ namespace SnakeAndLadders
                 var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "recent_chat(@gameName)", paramInput.ToArray());
                 return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
             }
+        }
+
+        public string LeaveGame()
+        {
+            List<MySqlParameter> paramInput = new List<MySqlParameter>();
+            var paramUsername = new MySqlParameter("@userName", MySqlDbType.VarChar, 20);
+            var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
+            paramUsername.Value = Username;
+            paramGameName.Value = Username;
+            paramInput.Add(paramUsername);
+            paramInput.Add(paramGameName);
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "leave_game(@userName,@gameName)", paramInput.ToArray());
+            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
         }
 
         public string Logout()
