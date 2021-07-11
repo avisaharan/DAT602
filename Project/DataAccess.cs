@@ -16,6 +16,7 @@ namespace SnakeAndLadders
         public static string Username = "";
         public static string GameName = "my game";
         public static int PlayerLocation = 1;
+        public static DataSet TilesData = new DataSet();
         //variable to store test results
 
 
@@ -144,15 +145,15 @@ namespace SnakeAndLadders
             return returned;
         }
 
-        public string GetPlayersInAGame()
+        public DataSet GetPlayersInAGame()
         {
             List<MySqlParameter> paramInput = new List<MySqlParameter>();
             var paramGameName = new MySqlParameter("@gameName", MySqlDbType.VarChar, 20);
             paramGameName.Value = GameName;
             paramInput.Add(paramGameName);
             var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "all_players_location(@gameName)", paramInput.ToArray());
-
-            return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
+            return aDataSet;
+            //return (aDataSet.Tables[0].Rows[0])["MESSAGE"].ToString();
         }
 
         public string AdminEditPlayer(string pUsername, string pPassword, int pLoginAttempts, bool pIsAdmin)

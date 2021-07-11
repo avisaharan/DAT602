@@ -34,14 +34,12 @@ namespace SnakeAndLadders
             this.logoutButton = new System.Windows.Forms.Button();
             this.rollDiceButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.myLocation = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.otherPlayerslocations = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.TilesGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,23 +88,14 @@ namespace SnakeAndLadders
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(403, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 31;
-            this.label1.Text = "YourGridID:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(540, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 13);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Other Players Locations:";
+            this.label1.Text = "Your Location:";
             // 
             // myLocation
             // 
             this.myLocation.AutoSize = true;
-            this.myLocation.Location = new System.Drawing.Point(483, 10);
+            this.myLocation.Location = new System.Drawing.Point(481, 9);
             this.myLocation.Name = "myLocation";
             this.myLocation.Size = new System.Drawing.Size(13, 13);
             this.myLocation.TabIndex = 33;
@@ -167,28 +156,17 @@ namespace SnakeAndLadders
             this.label7.TabIndex = 38;
             this.label7.Text = "5";
             // 
-            // otherPlayerslocations
-            // 
-            this.otherPlayerslocations.AutoSize = true;
-            this.otherPlayerslocations.Location = new System.Drawing.Point(668, 9);
-            this.otherPlayerslocations.Name = "otherPlayerslocations";
-            this.otherPlayerslocations.Size = new System.Drawing.Size(13, 13);
-            this.otherPlayerslocations.TabIndex = 39;
-            this.otherPlayerslocations.Text = "L";
-            // 
             // GameGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.otherPlayerslocations);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.myLocation);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rollDiceButton);
             this.Controls.Add(this.logoutButton);
@@ -210,13 +188,11 @@ namespace SnakeAndLadders
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.Button rollDiceButton;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label myLocation;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label otherPlayerslocations;
     }
 }

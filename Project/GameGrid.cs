@@ -25,9 +25,8 @@ namespace SnakeAndLadders
         {
             DataAccess aDataAccess = new DataAccess();
             var cordinates = this.tilesCordinates;
-            //TilesGrid.DataSource = cordinates;
+            TilesGrid.DataSource = aDataAccess.GetPlayersInAGame().Tables[0];
             myLocation.Text = Convert.ToString(DataAccess.PlayerLocation);
-            otherPlayerslocations.Text = (aDataAccess.GetPlayersInAGame());
         }
 
         private List<TileCordinate> CordinatesStore()
