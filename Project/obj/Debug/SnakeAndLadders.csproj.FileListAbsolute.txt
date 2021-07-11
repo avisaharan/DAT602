@@ -54,3 +54,9 @@ C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\obj\Debug\SnakeAndLadders.cspro
 C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\obj\Debug\SnakeAndLadders.csproj.CopyComplete
 C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\obj\Debug\SnakeAndLadders.exe
 C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\obj\Debug\SnakeAndLadders.pdb
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\bin\Debug\System.Security.AccessControl.dll
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\bin\Debug\System.Security.Permissions.dll
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\bin\Debug\System.Security.AccessControl.xml
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\bin\Debug\System.Security.Permissions.xml
+C:\Users\Abhimanu Saharan\Desktop\DAT602\Project\bin\Debug\System.Security.Principal.Windows.xml
