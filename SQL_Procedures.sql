@@ -1,16 +1,14 @@
-DROP DATABASE IF EXISTS SnakeandLadder;
-CREATE DATABASE SnakeAndLadder;
-USE SnakeAndLadder;
+
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DDL`()
 BEGIN
-    
 CREATE TABLE `gamesession` (
   `gameID` int NOT NULL AUTO_INCREMENT,
-  `gameName` varchar(20) DEFAULT NULL,
+  `gameName` varchar(20) NOT NULL,
   `gameActive` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`gameID`),
-  UNIQUE KEY `gameID_UNIQUE` (`gameID`)
+  UNIQUE KEY `gameID_UNIQUE` (`gameID`),
+  UNIQUE KEY `gameName_UNIQUE` (`gameName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `player` (
@@ -53,6 +51,23 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_access`(pUserName varchar(20))
+BEGIN
+START TRANSACTION;
+	IF EXISTS (SELECT `userName` FROM player WHERE `userName` = pUserName AND `isAdmin` = true) THEN
+		BEGIN
+			SELECT ("Access granted as Admin") AS MESSAGE;
+		END;
+	ELSE
+	BEGIN
+		SELECT ("Only admins can can access this form") AS MESSAGE;
+	END;
+    END IF;
+    COMMIT;
+END$$
+DELIMITER ;
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_delete_game`(pGameName varchar(20))
 BEGIN
 IF EXISTS(SELECT `GameName` FROM gamesession WHERE `gameName` = pGameName) THEN
@@ -65,56 +80,6 @@ IF EXISTS(SELECT `GameName` FROM gamesession WHERE `gameName` = pGameName) THEN
 ELSE
 	SELECT concat(pGameName, "does not exist.") AS MESSAGE;
 END IF;
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `create_new_game`(pGameName varchar(20))
-BEGIN
-IF exists(SELECT gameName FROM gamesession WHERE gameName=pGameName) THEN
-	SELECT concat("Game with the name '",pGameName,"' already exists.") AS Message;
-    ELSE
-	INSERT INTO gameSession (`gameName`)
-    VALUES(pGameName);
-    SELECT concat("Game '",pGameName,"' created.") AS MESSAGE;
-    END IF;
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `after_move`(in pCurrentLocation int, out pnewLocation int)
-BEGIN
-	IF((SELECT `hasSnake` FROM tiles WHERE `tileID`=pcurrentLocation)=1) THEN
-    set pnewLocation=pCurrentLocation-5;
-    ELSEIF((SELECT `hasLadder` FROM tiles WHERE `tileID`=pcurrentLocation)=1) THEN
-    set pnewLocation=pCurrentLocation+5;
-    end if;
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_stop_game`(pGameId int)
-BEGIN
-UPDATE gameSession
-SET `gameActive` = false
-WHERE `gameId` = pGameId;
-SELECT ('Game Stopped.') AS MESSAGE;
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_edit_player`(pUserName varchar(20), pNewPassword varchar(20), ploginAttempts int, phighScore int)
-BEGIN
-
-START TRANSACTION;
-IF EXISTS(SELECT `userName` FROM player WHERE `userName` = pUserName) THEN
-		UPDATE player
-		SET `password` = pNewPassword, `loginAttempts`=ploginAttempts
-		WHERE `userName` = pUserName;
-		SELECT ("Player Data Updated") AS MESSAGE;
-END IF;
-COMMIT;
-    
 END$$
 DELIMITER ;
 
@@ -135,19 +100,52 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_access`(pUserName varchar(20))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_edit_player`(pUserName varchar(20), pNewPassword varchar(20), ploginAttempts int, phighScore int)
 BEGIN
+
 START TRANSACTION;
-	IF EXISTS (SELECT `userName` FROM player WHERE `userName` = pUserName AND `isAdmin` = true) THEN
-		BEGIN
-			SELECT ("Access granted as Admin") AS MESSAGE;
-		END;
-	ELSE
-	BEGIN
-		SELECT ("Only admins can can access this form") AS MESSAGE;
-	END;
+IF EXISTS(SELECT `userName` FROM player WHERE `userName` = pUserName) THEN
+		UPDATE player
+		SET `password` = pNewPassword, `loginAttempts`=ploginAttempts
+		WHERE `userName` = pUserName;
+		SELECT ("Player Data Updated") AS MESSAGE;
+END IF;
+COMMIT;
+    
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_stop_game`(pGameId int)
+BEGIN
+UPDATE gameSession
+SET `gameActive` = false
+WHERE `gameId` = pGameId;
+SELECT ('Game Stopped.') AS MESSAGE;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `after_move`(in pCurrentLocation int, out pnewLocation int)
+BEGIN
+	IF((SELECT `hasSnake` FROM tiles WHERE `tileID`=pcurrentLocation)=1) THEN
+    set pnewLocation=pCurrentLocation-5;
+    ELSEIF((SELECT `hasLadder` FROM tiles WHERE `tileID`=pcurrentLocation)=1) THEN
+    set pnewLocation=pCurrentLocation+5;
+    end if;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_new_game`(pGameName varchar(20))
+BEGIN
+IF exists(SELECT gameName FROM gamesession WHERE gameName=pGameName) THEN
+	SELECT concat("Game with the name '",pGameName,"' already exists.") AS Message;
+    ELSE
+	INSERT INTO gameSession (`gameName`)
+    VALUES(pGameName);
+    SELECT concat("Game '",pGameName,"' created.") AS MESSAGE;
     END IF;
-    COMMIT;
 END$$
 DELIMITER ;
 
@@ -280,36 +278,40 @@ BEGIN
             UPDATE player
             SET `isOnline` = false
             WHERE `userName` = pUserName;
-            SELECT concat("Logged out") AS MESSAGE;
+            SELECT concat("Logged out", pusername) AS MESSAGE;
         END;
 	COMMIT;
 END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `move_player`(pPlayerID int, pGameID int, pdiceValue int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `move_player`(pPlayerName varchar(20), pGameName varchar(20), pdiceValue int)
 BEGIN
-IF (SELECT `isOnline` FROM player WHERE `playerID`=pplayerID)=1 THEN
-(SELECT `location` from player WHERE `playerID`=playerID AND `gameID`=pGameID) into @currentLocation;
+(SELECT ID FROM player WHERE username=pPlayerName) into @pPlayerID;
+(SELECT gameID FROM gamesession WHERE gameName=pGameName) into @pGameID;
+IF (SELECT `isOnline` FROM player WHERE `playerID`=@pplayerID)=1 THEN
+(SELECT `location` from player WHERE `playerID`=@playerID AND `gameID`=@pGameID) into @currentLocation;
 	IF (100-@currentLocation)>pDiceValue THEN 
 	UPDATE player
     SET `location`=@currentLocation+pdiceValue
-    WHERE `ID`=pPlayerID AND `gameID`=pGameID;
+    WHERE `ID`=@pPlayerID AND `gameID`=@pGameID;
     END If;
-    (SELECT `location` from player WHERE `playerID`=playerID AND `gameID`=pGameID) into @currentLocation;
+    (SELECT `location` from player WHERE `playerID`=@playerID AND `gameID`=@pGameID) into @currentLocation;
     call after_move(@currentLocation, @newlocation);
     UPDATE player
     SET `location`=@newLocation
-    WHERE `ID`=pPlayerID AND `gameID`=pGameID;
+    WHERE `ID`=@pPlayerID AND `gameID`=@pGameID;
+    SELECT concat("Player moved ", pdiceValue," tiles, to TileID", @newlocation) as MESSAGE;
 END If;
 END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `recent_chat`(pGameID int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recent_chat`(pGameName varchar(20))
 BEGIN
+(SELECT gameID FROM gamesession WHERE gameName=pGameName) into @pGameID;
 	SELECT `message` FROM message  AS MESSAGE
-    WHERE `gameID`=pgameID
+    WHERE `gameID`=@pgameID
 	ORDER BY `messageID` ASC
 	LIMIT 10;
 END$$
@@ -335,10 +337,12 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `send_message`(pMessage varchar(300), pUserID int, pGameID int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `send_message`(pMessage varchar(300), pusername varchar(300), pgamename varchar(300))
 BEGIN
+(SELECT ID FROM player WHERE username=pusername) into @pUserID;
+(SELECT gameID FROM gamesession WHERE gameName=pGameName) into @pGameID;
 	INSERT INTO message(`gameID`, `playerID`,`message`)
-	VALUES(pGameID, pUserID,pMessage);
-	SELECT concat('Message Sent') AS MESSAGE;
+	VALUES(@pGameID, @pUserID,pMessage);
+	SELECT concat('Message Sent from ', pusername, " in game: ", pGameName) AS MESSAGE;
 END$$
 DELIMITER ;
